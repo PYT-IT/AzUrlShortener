@@ -31,8 +31,9 @@ else
             <GridColumn Width="70" AllowFiltering="false" >
                 <Template>
                     @{
-                    var url = (context as ShortUrlEntity);
-                    <button type="button" class="btn btn-outline-primary btn-sm" @onclick="@(() => CopyToClipboardAsync(url.ShortUrl))">Copy</button>
+                        var url = (context as ShortUrlEntity);
+                        var murl = urlstub + url.RowKey;
+                        <button type="button" class="btn btn-outline-primary btn-sm" @onclick="@(() => CopyToClipboardAsync(murl))">Copy</button>
                 }
             </Template>
         </GridColumn>
@@ -55,7 +56,8 @@ else
             <Template>
                 @{
                     var url = (context as ShortUrlEntity);
-                    <a href="@url.ShortUrl" target="blank">@url.RowKey</a>
+                    var murl = urlstub + url.RowKey;
+                    <a href="@murl" target="blank">@url.RowKey</a>
                 }
             </Template>
         </GridColumn>
@@ -193,6 +195,7 @@ else
     ShortUrlEntity editedUrl;
     SfGrid<ShortUrlEntity> grdUrls;
     public List<ShortUrlEntity> gridData { get; set; }
+    public string urlstub { get; } = "https://m.pytglink.net/";
 
 
     protected override async Task OnInitializedAsync()
